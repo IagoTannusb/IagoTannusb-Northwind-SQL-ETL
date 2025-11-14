@@ -61,14 +61,3 @@ Diagrama ER utilizado:
 ![Diagrama ER Northwind](img/erd_northwind.png)
 
 ---
-
-## Arquitetura da Solução
-
-### 1. Camada Analítica de Vendas (Materialized View)
-
-```mermaid
-graph TD;
-    O[orders] --> OD[order_details];
-    OD --> F[Função bi.refresh_sales_accumulated_monthly_mv()];
-    O  --> F;
-    F  --> MV[(bi.sales_accumulated_monthly_mv)]
