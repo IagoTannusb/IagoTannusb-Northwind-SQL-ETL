@@ -37,10 +37,16 @@ graph TD;
 > Como controlar e auditar mudanças de cargo dos funcionários ao longo do tempo?
 
 **Solução técnica:**
-- Tabela `audit.employees_title_audit` registrando cada alteração de título;
+- Tabela `employees_title_audit` registrando cada alteração de título;
 - Trigger em `employees` que insere um registro sempre que `title` é alterado;
 - Stored Procedure `hr.update_employee_title` centralizando a atualização de título.
 
+```mermaid
+graph TB;
+    D[Procedimento atualizar_titulo_employee] -- Chamada --> A[Tabela employees];
+    A -- Atualização de título --> B[Trigger trg_auditoria_titulo];
+    B -- Registro em employees_auditoria --> C[Tabela employees_auditoria];
+```
 ---
 
 ## Estrutura do Banco de Dados
