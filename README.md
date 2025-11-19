@@ -21,7 +21,7 @@ Em vez de focar apenas em consultas analíticas, aqui o foco é mostrar como:
 **Solução técnica:**
 - Foi criada uma materialized view sales_accumulated_monthly_mv com o faturamento por ano/mês;
 ```SQL
-CREATE MATERIALIZED VIEW IF NOT EXISTS  sales_accumulated_monthly_mv AS 
+CREATE MATERIALIZED VIEW IF NOT EXISTS  sales_acumulated_monthly_mv AS 
 SELECT 
 	EXTRACT(year FROM o.order_date)::integer AS year_,
     EXTRACT(month FROM o.order_date)::integer AS month_,
@@ -126,6 +126,53 @@ Principais entidades:
 
 Diagrama ER utilizado:
 
-![Diagrama ER Northwind](img/erd_northwind.png)
+![Diagrama ER Northwind](img/image.png)
 
 ---
+
+## Configuração Inicial
+
+### 1. Manualmente
+Utilize o arquivo SQL fornecido, `northwind.sql`, para popular o banco de dados.
+### 2. Com Docker e Docker Compose
+
+**Pré-requisitos:**  
+Instale o Docker e o Docker Compose:
+- [Começar com Docker](https://www.docker.com/get-started)
+- [Instalar Docker Compose](https://docs.docker.com/compose/install/)
+#### Passos para configuração com Docker:
+1. **Iniciar o Docker Compose**  
+    Execute o comando abaixo para subir os serviços:
+```BASH
+docker compose up -d
+```
+
+- Aguarde as mensagens de configuração, como:
+```BASH
+Creating network "northwind_psql_db" with driver "bridge"
+Creating volume "northwind_psql_db" with default driver
+Creating volume "northwind_psql_pgadmin" with default driver
+Creating pgadmin ... done
+Creating db ... done
+```
+2. **Conectar o PgAdmin**  
+    Acesse o PgAdmin pelo URL: [http://localhost:5050](http://localhost:5050), com a senha `postgres`.  
+    Configure um novo servidor no PgAdmin:
+- **Aba General:**
+    - Nome: db
+- **Aba Connection:**
+    - Nome do host: db
+    - Nome de usuário: postgres
+    - Senha: postgres
+
+Em seguida, selecione o banco de dados **northwind**.
+
+3. **Parar o Docker Compose**  
+    Para encerrar o servidor iniciado pelo comando anterior, pressione `Ctrl + C` e remova os contêineres:
+
+4. **Arquivos e Persistência**
+Suas modificações no banco Postgres serão persistidas no volume Docker postgresql_data e poderão ser recuperadas reiniciando o Docker Compose com docker-compose up.
+Para deletar os dados do banco, execute:
+```BASH
+docker compose down -v
+```
