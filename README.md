@@ -37,7 +37,7 @@ graph TD;
 > Como controlar e auditar mudanças de cargo dos funcionários ao longo do tempo?
 
 **Solução técnica:**
-- Tabela `employees_title_audit` registrando cada alteração de título;
+- Tabela `employees_auditoria` registrando cada alteração de título;
 - Trigger em `employees` que insere um registro sempre que `title` é alterado;
 - Stored Procedure `hr.update_employee_title` centralizando a atualização de título.
 
