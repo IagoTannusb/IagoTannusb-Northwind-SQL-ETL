@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION refresh_sales_acumulated_monthly_mv()
+CREATE OR REPLACE FUNCTION fn_refresh_sales_accumulated_monthly_mv()
 RETURNS TRIGGER AS $$ 
 BEGIN 
 	REFRESH MATERIALIZED VIEW sales_accumulated_monthly_mv;
